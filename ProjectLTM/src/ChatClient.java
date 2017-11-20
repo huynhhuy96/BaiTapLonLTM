@@ -1,4 +1,5 @@
 
+import com.sun.jndi.toolkit.ctx.Continuation;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -27,21 +28,34 @@ import javax.swing.text.EditorKit;
 
 public class ChatClient extends javax.swing.JFrame {
 
- 
     public ChatClient() {
         initComponents();
     }
+    chat_thread ncl = new chat_thread();
 
-   /* public ChatClient(String user) {
+    public ChatClient(String user) {
+
         initComponents();
-        //nickname = user;
-        
+        nickname = user;
+        ncl.nickname = nickname;
+        ncl.txt_msg = txt_msg;
+        ncl.jTextArea1 = jTextArea1;
+        ncl.jTextPane1 = jTextPane1;
+        ncl.start();
+    }
 
-    }*/
-
-   
+    public static String nickname = null;
+    public static String host = "localhost";
+    public int port_server = 9001;
+    public String add_server = host;
+    public static boolean calling = false;
+    static BufferedReader in;
+    static PrintWriter out;
+    TargetDataLine audio_in;
+    public static String serverAddress = host;
+    public static Socket socket;
+    public static Socket socketCL;
     @SuppressWarnings("unchecked")
-
     //voice
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,6 +77,7 @@ public class ChatClient extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AppChatSocket");
@@ -139,7 +154,7 @@ public class ChatClient extends javax.swing.JFrame {
                 .addComponent(jCheckBox3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox2)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +176,14 @@ public class ChatClient extends javax.swing.JFrame {
         jTextPane1.setEditable(false);
         jScrollPane4.setViewportView(jTextPane1);
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-No Connection-16.png"))); // NOI18N
+        jButton4.setText(" Connect");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,7 +203,8 @@ public class ChatClient extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addComponent(jButton4))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_send, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,11 +220,13 @@ public class ChatClient extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_send, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,19 +240,14 @@ public class ChatClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //button send
     private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
-
-        out.println(txt_msg.getText());
-        txt_msg.setText("");
+        ncl.sendText(txt_msg.getText());      
     }//GEN-LAST:event_btn_sendActionPerformed
-
-    static BufferedReader in;
-    static PrintWriter out;
 
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         init_audio();
         voice v = new voice();
-        out.println("Đang thực hiện cuộc gọi...");
+        ncl.sendText("Đang thực hiện cuộc gọi...");
         v.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -239,32 +260,16 @@ public class ChatClient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String serverAddress = "localhost";
+        try {
+            socket = new Socket(serverAddress, 9001);
+        } catch (IOException ex) {
+            Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-     public String getName() {
-     return JOptionPane.showInputDialog("Tên của bạn! ");
-     }
-     
-    public String getHost() {
-        Object[] possibilities = {"localhost", "172.16.0.91"};
-        String s = (String) JOptionPane.showInputDialog(
-                null,
-                "Sử dụng nhóm chát?",
-                "Chọn đối tượng chát!",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                possibilities,
-                "localhost");
-
-        return s;
-    }
-
-    //public static String nickname;
-    //voice
-    public int port_server = 9001;
-    //public String add_server = "localhost";
-    public String add_server = host;
-    public static boolean calling = false;
-
+   
     public static AudioFormat getauAudioFormat() {
         float sampleRate = 8000.0F;
         int sampleSizeIntbits = 16;
@@ -273,8 +278,6 @@ public class ChatClient extends javax.swing.JFrame {
         boolean bigEndian = false;
         return new AudioFormat(sampleRate, sampleSizeIntbits, channel, signed, bigEndian);
     }
-
-    TargetDataLine audio_in;
 
     public void init_audio() {
         try {
@@ -301,11 +304,6 @@ public class ChatClient extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static String host;
-
     public static void main(String args[]) {
 
         try {
@@ -324,60 +322,13 @@ public class ChatClient extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ChatClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        ChatClient cl = new ChatClient();
-        String nickname = cl.getName();
-
-        host = cl.getHost();
-        /* Create and display the form */
+     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatClient().setVisible(true);
+                new ChatClient().setVisible(false);
 
             }
         });
-
-        try {
-            //String serverAddress = "localhost";
-            String serverAddress = host;
-            Socket socket = null;
-            try {
-                socket = new Socket(serverAddress, 9001);
-            } catch (IOException ex) {
-                Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            in = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-
-            while(true){
-                 String line = in.readLine();
-                 if (line.startsWith("SUBMITNAME")) {
-                 out.println(nickname);
-                 } else if (line.startsWith("NAMEACCEPTED")) {
-                 out.println("\"Đã tham gia cuộc trò chuyện\"");
-                 txt_msg.setEditable(true);
-
-                 } else if (line.startsWith("MESSAGE")) {
-                 EditorKit kit = jTextPane1.getEditorKitForContentType("text/html");
-                 jTextPane1.setEditorKit(kit);
-                 if(line.substring(8).startsWith(nickname))
-                 {
-                 jTextArea1.append("<p style=\"font-family:Helvetica;text-align:right;color: #3399FF;font-size:110%;\"><span style=\"background-color:#99FF33\">"+"<i>" +" "+ line.substring(8+nickname.length()+1) +" "+ "</span></p>");
-                 }
-                 else
-                 {
-                 jTextArea1.append("<p style=\"font-family:Helvetica;text-align:left;color: #FF0000; font-size:110%;\"><span style=\"background-color:#99FFFF\">"+"<i>"  +" " + line.substring(8) +" "+ "</span></p>");
-                 }
-                 jTextPane1.setText(jTextArea1.getText());
-                 }
-                 
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -385,6 +336,7 @@ public class ChatClient extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private static javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private static javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;

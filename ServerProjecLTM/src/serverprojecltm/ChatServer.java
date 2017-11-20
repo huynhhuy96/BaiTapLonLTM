@@ -40,6 +40,7 @@ public class ChatServer {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Server is running with PORT " + PORT);
+        System.out.println("Server IP: " + "127.0.0.1");
         ServerSocket listener = new ServerSocket(PORT);
         //for voice     
         AudioFormat format = getauAudioFormat();
@@ -59,9 +60,14 @@ public class ChatServer {
         p.start();
         System.out.println("Voice server ready!.");
         System.out.println("Chat server ready!.");
-        ///       
+        ///     
+        //LOGIN
+     
+       
+        //
         try {
             while (true) {
+              
                 new Handler(listener.accept()).start();
             }
         } finally {
@@ -87,8 +93,11 @@ public class ChatServer {
                         socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
+             String check = in.readLine();
+             if(check.startsWith("USER"))
+             {
                 ///Login
-            /*    while (true) {
+                while (true) {
                     String usr = in.readLine();
                     String pass = in.readLine();
                     File fl = new File("D:\\users.txt");
@@ -116,8 +125,10 @@ public class ChatServer {
                     }
 
                 }
-*/
-                while (true) {
+             }
+             if(check.startsWith("NAME"))
+             {
+                   while (true) {
                     out.println("SUBMITNAME");
                     name = in.readLine();
                     if (name == null) {
@@ -132,9 +143,10 @@ public class ChatServer {
                 }
                 out.println("NAMEACCEPTED");
                 writers.add(out);
-
+           
                 while (true) {
                     String input = in.readLine();
+                    System.out.println("Client gửi:  "+input);
                     if (input == null) {
                         return;
                     }
@@ -142,6 +154,9 @@ public class ChatServer {
                         writer.println("MESSAGE " + name + ":  " + input);
                     }
                 }
+             }
+
+              
             } catch (IOException e) {
                 System.out.println(e);
             } finally {
@@ -158,4 +173,74 @@ public class ChatServer {
             }
         }
     }
+    
+    //////////////////////////LOGIN
+    
+   /* private static class Login extends Thread {
+
+        private String name;
+        private Socket socket;
+        private BufferedReader in;
+        private PrintWriter out;
+
+        public Login(Socket socket) {
+            this.socket = socket;
+        }
+
+        public void run() {
+           
+            try {
+                in = new BufferedReader(new InputStreamReader(
+                        socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                ///Login
+                while (true) {
+                    String usr = in.readLine();
+                    String pass = in.readLine();
+                    File fl = new File("D:\\users.txt");
+                    FileInputStream fi = new FileInputStream(fl);
+                    DataInputStream di = new DataInputStream(fi);
+                    String str = null;
+                    boolean dec = false;
+                    str = di.readLine();
+                    while (true) {
+                        if (str == null) {
+                            break;
+                        }
+                        String pas = di.readLine();
+                        if (str.equals(usr) && pas.equals(pass)) {
+                            dec = true;
+                            break;
+                        }
+                        str = di.readLine();
+                    }
+                    if (dec) {
+                        out.println("Login successful");
+                        break;
+                    } else {
+                        out.println("Login failed");
+                    }
+
+                }
+ 
+            } catch (IOException e) {
+                System.out.println(e);
+            } finally {
+                if (name != null) {
+                    names.remove(name);
+                }
+                if (out != null) {
+                    writers.remove(out);
+                }
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
+    */
+    
+    
 }

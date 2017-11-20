@@ -1,4 +1,5 @@
 
+import com.sun.tracing.dtrace.ArgsAttributes;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -124,13 +125,13 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
             String serverAddress = "localhost";
-            Socket socket = null;
+            Socket socketL = null;
             try {
-                socket = new Socket(serverAddress, 9001);
+                socketL = new Socket(serverAddress, 9001);
                 in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-
+                        socketL.getInputStream()));
+                out = new PrintWriter(socketL.getOutputStream(), true);
+                out.println("USER");
                 out.println(txtuser.getText());
                 System.out.println(txtuser.getText());
                 out.println(txtpass.getText());
@@ -139,8 +140,17 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, reply);
                 if (reply.equalsIgnoreCase("login successful")) {
                    
-                    this.setVisible(false);
-                   //  new ChatClient(txtuser.getText()).setVisible(true);
+                     this.setVisible(false);
+                     //new ChatClient(txtuser.getText(),serverAddress,socketL).setVisible(true);
+                     out.println(txtuser.getText());
+                    ChatClient uclient = new ChatClient(txtuser.getText());
+                    uclient.show();
+                     
+                    
+                     
+                    
+                     
+                             
                      
                 }
             } catch (IOException ex) {
