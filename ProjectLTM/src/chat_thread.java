@@ -25,7 +25,6 @@ public class chat_thread extends Thread{
     @Override
     
     
-    
     public void  run()
     {
         try {
@@ -48,7 +47,7 @@ public class chat_thread extends Thread{
 
                 } else if (line.startsWith("NAMEACCEPTED")) {
 
-                    out.println("\"Đã tham gia cuộc trò chuyện\"");
+                    out.println("<i> \"Đã tham gia cuộc trò chuyện\"");
                     txt_msg.setEditable(true);
 
                 }
@@ -56,9 +55,9 @@ public class chat_thread extends Thread{
                     EditorKit kit = jTextPane1.getEditorKitForContentType("text/html");
                     jTextPane1.setEditorKit(kit);
                     if (line.substring(8).startsWith(nickname)) {
-                        jTextArea1.append("<p style=\"font-family:Helvetica;text-align:right;color: #3399FF;font-size:110%;\"><span style=\"background-color:#99FF33\">" + "<i>" + " " + line.substring(8 + nickname.length() + 1) + " " + "</span></p>");
+                        jTextArea1.append("<p style=\"font-family:Helvetica;text-align:right;color: #3399FF;font-size:110%;\"><span style=\"background-color:#99FF33\">" + " " + line.substring(8 + nickname.length() + 1) + " " + "</span></p>");
                     } else {
-                        jTextArea1.append("<p style=\"font-family:Helvetica;text-align:left;color: #FF0000; font-size:110%;\"><span style=\"background-color:#99FFFF\">" + "<i>" + " " + line.substring(8) + " " + "</span></p>");
+                        jTextArea1.append("<p style=\"font-family:Helvetica;text-align:left;color: #FF0000; font-size:110%;\"><span style=\"background-color:#99FFFF\">" + " " + line.substring(8) + " " + "</span></p>");
                     }
                     jTextPane1.setText(jTextArea1.getText());
                 }

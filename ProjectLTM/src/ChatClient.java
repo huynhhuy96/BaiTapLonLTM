@@ -71,8 +71,6 @@ public class ChatClient extends javax.swing.JFrame {
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -120,6 +118,7 @@ public class ChatClient extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(153, 255, 255));
 
         jCheckBox2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jCheckBox2.setSelected(true);
         jCheckBox2.setText("Italic");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,24 +132,13 @@ public class ChatClient extends javax.swing.JFrame {
         jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jCheckBox1.setText("Bold");
 
-        jCheckBox5.setForeground(new java.awt.Color(0, 255, 255));
-        jCheckBox5.setText("Blue");
-
-        jCheckBox4.setForeground(new java.awt.Color(255, 0, 0));
-        jCheckBox4.setText("Red");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox2)
@@ -159,8 +147,6 @@ public class ChatClient extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jCheckBox5)
-                .addComponent(jCheckBox4)
                 .addComponent(jCheckBox1)
                 .addComponent(jCheckBox3)
                 .addComponent(jCheckBox2))
@@ -240,7 +226,21 @@ public class ChatClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //button send
     private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
-        ncl.sendText(txt_msg.getText());      
+      String text = "";
+        if(jCheckBox1.isSelected()) 
+       {
+          text = text + "<b>";
+       }
+       if(jCheckBox2.isSelected())
+       {
+           text = text + "<i>";
+       }
+       
+       if(jCheckBox3.isSelected())
+       {
+           text = text + "<u>";
+       }
+        ncl.sendText(text + txt_msg.getText());      
     }//GEN-LAST:event_btn_sendActionPerformed
 
 
@@ -339,10 +339,8 @@ public class ChatClient extends javax.swing.JFrame {
     private static javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private static javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private static javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -146,7 +146,7 @@ public class ChatServer {
            
                 while (true) {
                     String input = in.readLine();
-                    System.out.println("Client gửi:  "+input);
+                   // System.out.println("Client gửi:  "+input);
                     if (input == null) {
                         return;
                     }
