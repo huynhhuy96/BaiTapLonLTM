@@ -81,7 +81,7 @@ public class ChatServer {
         private Socket socket;
         private BufferedReader in;
         private PrintWriter out;
-
+        public  static String notify = "";
         public Handler(Socket socket) {
             this.socket = socket;
         }
@@ -125,9 +125,11 @@ public class ChatServer {
                     }
 
                 }
-             }
+             }//xac nhan ten va bat dau thu hien chat.
+             
              if(check.startsWith("NAME"))
              {
+                 
                    while (true) {
                     out.println("SUBMITNAME");
                     name = in.readLine();
@@ -143,15 +145,18 @@ public class ChatServer {
                 }
                 out.println("NAMEACCEPTED");
                 writers.add(out);
-           
+               
+                
                 while (true) {
                     String input = in.readLine();
-                   // System.out.println("Client gửi:  "+input);
+                    System.out.println("MESSAGE " + name + ":" + input);
                     if (input == null) {
                         return;
                     }
                     for (PrintWriter writer : writers) {
-                        writer.println("MESSAGE " + name + ":  " + input);
+                       
+                           writer.println("MESSAGE " + name + ":" + input);
+                                              
                     }
                 }
              }
@@ -174,73 +179,6 @@ public class ChatServer {
         }
     }
     
-    //////////////////////////LOGIN
-    
-   /* private static class Login extends Thread {
-
-        private String name;
-        private Socket socket;
-        private BufferedReader in;
-        private PrintWriter out;
-
-        public Login(Socket socket) {
-            this.socket = socket;
-        }
-
-        public void run() {
-           
-            try {
-                in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-
-                ///Login
-                while (true) {
-                    String usr = in.readLine();
-                    String pass = in.readLine();
-                    File fl = new File("D:\\users.txt");
-                    FileInputStream fi = new FileInputStream(fl);
-                    DataInputStream di = new DataInputStream(fi);
-                    String str = null;
-                    boolean dec = false;
-                    str = di.readLine();
-                    while (true) {
-                        if (str == null) {
-                            break;
-                        }
-                        String pas = di.readLine();
-                        if (str.equals(usr) && pas.equals(pass)) {
-                            dec = true;
-                            break;
-                        }
-                        str = di.readLine();
-                    }
-                    if (dec) {
-                        out.println("Login successful");
-                        break;
-                    } else {
-                        out.println("Login failed");
-                    }
-
-                }
- 
-            } catch (IOException e) {
-                System.out.println(e);
-            } finally {
-                if (name != null) {
-                    names.remove(name);
-                }
-                if (out != null) {
-                    writers.remove(out);
-                }
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                }
-            }
-        }
-    }
-    */
-    
+   
     
 }

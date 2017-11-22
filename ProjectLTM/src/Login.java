@@ -129,9 +129,9 @@ public class Login extends javax.swing.JFrame {
                 out = new PrintWriter(socketL.getOutputStream(), true);
                 out.println("USER");
                 out.println(txtuser.getText());
-                System.out.println(txtuser.getText());
+                
                 out.println(txtpass.getText());
-                System.out.println(txtpass.getText());
+               
                 String reply = in.readLine();
                 JOptionPane.showMessageDialog(rootPane, reply);
                 if (reply.equalsIgnoreCase("login successful")) {
