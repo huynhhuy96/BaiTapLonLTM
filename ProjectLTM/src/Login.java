@@ -62,6 +62,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 8)); // NOI18N
         jLabel4.setText("Made by Nguyễn Huỳnh Huy 56MTT");
@@ -121,6 +126,7 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
             String serverAddress = "localhost";
+            //String serverAddress = "172.20.10.5";
             Socket socketL = null;
             try {
                 socketL = new Socket(serverAddress, 9001);
@@ -134,7 +140,7 @@ public class Login extends javax.swing.JFrame {
                
                 String reply = in.readLine();
                 JOptionPane.showMessageDialog(rootPane, reply);
-                if (reply.equalsIgnoreCase("login successful")) {
+                if (reply.equalsIgnoreCase("login successful.")) {
                    
                      this.setVisible(false);
                      //new ChatClient(txtuser.getText(),serverAddress,socketL).setVisible(true);
@@ -154,6 +160,10 @@ public class Login extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
     static BufferedReader in;
     static PrintWriter out;
 
@@ -193,6 +203,7 @@ public class Login extends javax.swing.JFrame {
         Socket socket = null;
         try {
             socket = new Socket("localhost", 9001);
+         //  socket = new Socket("172.20.10.5", 9001);
         } catch (IOException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }

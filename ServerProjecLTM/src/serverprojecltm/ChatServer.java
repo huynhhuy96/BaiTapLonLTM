@@ -40,7 +40,7 @@ public class ChatServer {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Server is running with PORT " + PORT);
-        System.out.println("Server IP: " + "127.0.0.1");
+       // System.out.println("Server IP: " + "172.20.10.5");
         ServerSocket listener = new ServerSocket(PORT);
         //for voice     
         AudioFormat format = getauAudioFormat();
@@ -90,7 +90,7 @@ public class ChatServer {
            
             try {
                 in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
+                        socket.getInputStream(),"utf8"));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
              String check = in.readLine();
@@ -118,10 +118,10 @@ public class ChatServer {
                         str = di.readLine();
                     }
                     if (dec) {
-                        out.println("Login successful");
+                        out.println("Login successful.");
                         break;
                     } else {
-                        out.println("Login failed");
+                        out.println("USER or PASSWORD are not correct!");
                     }
 
                 }
