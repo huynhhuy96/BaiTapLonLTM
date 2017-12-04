@@ -209,7 +209,7 @@ public class ChatClient extends javax.swing.JFrame {
         jLabel2.setText("Notify from system");
         jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton4.setText("Log out");
         jButton4.setBorder(null);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -400,7 +400,7 @@ public class ChatClient extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_msgKeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       JOptionPane.showMessageDialog(this,"Sản phẩm được thực hiện bởi:\r\nNguyễn Huỳnh Huy\r\nLớp 56MTT\r\nTrường ĐH Nha Trang.","Introduce my project",JOptionPane.INFORMATION_MESSAGE);
+       JOptionPane.showMessageDialog(this,"Sản phẩm được thực hiện bởi:\r\nNguyễn Huỳnh Huy\r\nTrường ĐH Nha Trang\r\nLớp 56MTT.","Introduce my project",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton6ActionPerformed
 
    
