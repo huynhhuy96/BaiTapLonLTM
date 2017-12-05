@@ -78,8 +78,6 @@ public class ChatServer {
             listener.close();
         }
     }
-    
-    	
 
     private static class Handler extends Thread {
 
@@ -88,6 +86,7 @@ public class ChatServer {
         private BufferedReader in;
         private PrintWriter out;
         public static String notify = "";
+        public static String uonline = "All User";
 
         public Handler(Socket socket) {
             this.socket = socket;
@@ -122,7 +121,7 @@ public class ChatServer {
                         DataInputStream di = new DataInputStream(fi);
                         String str = null;
                         str = di.readLine();
-                        
+
                         while (str != null) {
                             String pas = di.readLine();
                             if (str.equals(user)) {
@@ -187,7 +186,9 @@ public class ChatServer {
                             str = di.readLine();
                         }
                         if (dec) {
+                            uonline += str;
                             out.println("Login successful.");
+
                             break;
                         } else {
                             out.println("USER or PASSWORD are not correct!");
@@ -216,15 +217,35 @@ public class ChatServer {
 
                     while (true) {
                         String input = in.readLine();
-                        System.out.println("MESSAGE " + name + ":" + input);
-                        if (input == null) {
-                            return;
-                        }
-                        for (PrintWriter writer : writers) {
+                        if (input.startsWith("GETUSER")) {
+                            out.println("USER" + uonline);
+                            System.out.println(input);
+                        } else {
+                            if (input.substring(17).startsWith(" is offline...")) {
+                                for (PrintWriter writer : writers) {
 
-                            writer.println("MESSAGE " + name + ":" + input);
+                                    writer.println("MESSAGE " + name + ":" + input);
+
+                                }
+                                for (int i = 8; i < uonline.length(); i += 8) {
+                                    if (uonline.substring(i).startsWith(input.substring(9, 17))) {
+                                        uonline = uonline.substring(0, i) + uonline.substring(i + 8);
+                                    }
+                                }
+                            } else {
+                                System.out.println("MESSAGE " + name + ":" + input);
+                                if (input == null) {
+                                    return;
+                                }
+                                for (PrintWriter writer : writers) {
+
+                                    writer.println("MESSAGE " + name + ":" + input);
+
+                                }
+                            }
 
                         }
+
                     }
                 }
 
