@@ -33,6 +33,7 @@ public class ChatClient extends javax.swing.JFrame {
 
     public ChatClient() {
         initComponents();
+       
     }
     chat_thread ncl = new chat_thread();
 
@@ -50,12 +51,12 @@ public class ChatClient extends javax.swing.JFrame {
         ncl.start();
         txt_notify.append(" > Login success...\n");
         txt_msg.requestFocus();
-       
+
     }
 
     public static String nickname = null;
-    public static String host = "localhost";
-   // public static String host = "172.20.10.5";
+   public static String host = "localhost";
+    //public static String host = "172.16.0.91";
     public int port_server = 9001;
     public String add_server = host;
     public static boolean calling = false;
@@ -65,13 +66,12 @@ public class ChatClient extends javax.swing.JFrame {
     public static String serverAddress = host;
     public static Socket socket;
     public static Socket socketCL;
+
     @SuppressWarnings("unchecked")
     //voice
-    
 
-    
     //event enter
-   
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -100,10 +100,9 @@ public class ChatClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AppChatSocket");
         setBackground(new java.awt.Color(153, 255, 255));
-        setMaximumSize(new java.awt.Dimension(1500, 1350));
         setResizable(false);
 
-        btn_send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-Sent.png"))); // NOI18N
+        btn_send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-sent-25.png"))); // NOI18N
         btn_send.setText(" Gửi");
         btn_send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,7 +182,6 @@ public class ChatClient extends javax.swing.JFrame {
 
         jTextPane1.setEditable(false);
         jTextPane1.setBorder(null);
-        jTextPane1.setAutoscrolls(false);
         jTextPane1.setFocusCycleRoot(false);
         jTextPane1.setFocusable(false);
         jScrollPane4.setViewportView(jTextPane1);
@@ -195,7 +193,7 @@ public class ChatClient extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("jLabel1");
@@ -225,6 +223,11 @@ public class ChatClient extends javax.swing.JFrame {
             }
         });
 
+        txt_msg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_msgActionPerformed(evt);
+            }
+        });
         txt_msg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_msgKeyPressed(evt);
@@ -269,18 +272,17 @@ public class ChatClient extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(247, 247, 247))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ComboOnline, jLabel1});
@@ -295,14 +297,14 @@ public class ChatClient extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,47 +322,46 @@ public class ChatClient extends javax.swing.JFrame {
                             .addComponent(btn_send, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ComboOnline, jButton2, jButton3, jButton5, jLabel1});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton4, jButton6, jLabel2});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton4, jButton6});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 //button send
     private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
-      String format = "";
-      String namesend = "";
-      namesend = (String)ComboOnline.getSelectedItem();
-      
-            
-        if(jCheckBox1.isSelected()) 
-       {
-          format = format + "<b>";
-       }
-       if(jCheckBox2.isSelected())
-       {
-           format = format + "<i>";
-       }
-       
-       if(jCheckBox3.isSelected())
-       {
-           format = format + "<u>";
-       }
-        ncl.sendText(namesend + format + " " +txt_msg.getText());      
+        String format = "";
+        String namesend = "";
+        namesend = (String) ComboOnline.getSelectedItem();
+
+        if (jCheckBox1.isSelected()) {
+            format = format + "<b>";
+        }
+        if (jCheckBox2.isSelected()) {
+            format = format + "<i>";
+        }
+
+        if (jCheckBox3.isSelected()) {
+            format = format + "<u>";
+        }
+        String send = namesend + format + " " + txt_msg.getText();
+        if (send.length() <= 4) {
+            ncl.sendText(send + "   ");
+        } else {
+            ncl.sendText(send);
+        }
+
     }//GEN-LAST:event_btn_sendActionPerformed
 
 
-    
-    
-    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         init_audio();
         voice v = new voice();
-        ncl.sendText("notify" +" "+ nickname + " is calling...");
+        ncl.sendText("notify" + " " + nickname + " is calling...");
         v.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -378,44 +379,46 @@ public class ChatClient extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboOnlineActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       ncl.sendText("notify" +" > "+ nickname + " is offline...");
+        ncl.sendText("notify" + " > " + nickname + " is offline...");
         System.exit(0);
-       
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txt_msgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_msgKeyPressed
-      if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-           String format = "";
-      String namesend = "";
-      namesend = (String)ComboOnline.getSelectedItem();
-      
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String format = "";
+            String namesend = "";
+            namesend = (String) ComboOnline.getSelectedItem();
+
+            if (jCheckBox1.isSelected()) {
+                format = format + "<b>";
+            }
+            if (jCheckBox2.isSelected()) {
+                format = format + "<i>";
+            }
+
+            if (jCheckBox3.isSelected()) {
+                format = format + "<u>";
+            }
+            String send = namesend + format + " " + txt_msg.getText() + "      ";
+           
+                ncl.sendText(send);
             
-        if(jCheckBox1.isSelected()) 
-       {
-          format = format + "<b>";
-       }
-       if(jCheckBox2.isSelected())
-       {
-           format = format + "<i>";
-       }
-       
-       if(jCheckBox3.isSelected())
-       {
-           format = format + "<u>";
-       }
-        ncl.sendText(namesend + format + " " +txt_msg.getText());
-      }
+        }
     }//GEN-LAST:event_txt_msgKeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       JOptionPane.showMessageDialog(this,"Sản phẩm được thực hiện bởi:\r\nNguyễn Huỳnh Huy\r\nTrường ĐH Nha Trang\r\nLớp 56MTT.","Introduce my project",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Sản phẩm được thực hiện bởi:\r\nNguyễn Huỳnh Huy\r\nTrường ĐH Nha Trang\r\nLớp 56MTT.", "Introduce my project", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       ncl.sendText("GETUSER");
+        ncl.sendText("GETUSER");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-   
+    private void txt_msgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_msgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_msgActionPerformed
+
     public static AudioFormat getauAudioFormat() {
         float sampleRate = 8000.0F;
         int sampleSizeIntbits = 16;
@@ -468,17 +471,14 @@ public class ChatClient extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ChatClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-     
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ChatClient().setVisible(false);
 
             }
         });
-        
-        
-         
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

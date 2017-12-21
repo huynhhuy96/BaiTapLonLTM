@@ -217,8 +217,8 @@ public class register extends javax.swing.JFrame {
        {
         if(jPasswordField1.getText().equals(pass.getText()))
         {
-             String serverAddress = "localhost";
-        //String serverAddress = "172.20.10.5";
+            String serverAddress = "localhost";
+//        String serverAddress = "172.16.0.91";
         Socket socketL = null;
         try {
             socketL = new Socket(serverAddress, 9001);

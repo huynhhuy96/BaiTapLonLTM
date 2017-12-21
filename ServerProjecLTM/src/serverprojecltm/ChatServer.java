@@ -222,17 +222,13 @@ public class ChatServer {
                             System.out.println(input);
                         } else {
                             if (input.substring(17).startsWith(" is offline...")) {
-                                for (PrintWriter writer : writers) {
-
-                                    writer.println("MESSAGE " + name + ":" + input);
-
-                                }
                                 for (int i = 8; i < uonline.length(); i += 8) {
                                     if (uonline.substring(i).startsWith(input.substring(9, 17))) {
                                         uonline = uonline.substring(0, i) + uonline.substring(i + 8);
                                     }
                                 }
-                            } else {
+                            } /* else {
+                              */  
                                 System.out.println("MESSAGE " + name + ":" + input);
                                 if (input == null) {
                                     return;
@@ -242,7 +238,7 @@ public class ChatServer {
                                     writer.println("MESSAGE " + name + ":" + input);
 
                                 }
-                            }
+                            
 
                         }
 

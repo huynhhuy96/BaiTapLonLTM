@@ -35,7 +35,7 @@ public class chat_thread extends Thread{
         try {
 
            String serverAddress = "localhost";
-           // String serverAddress = "172.20.10.5";
+          //  String serverAddress = "172.16.0.91";
            try {
                 socket = new Socket(serverAddress, 9001);
             } catch (IOException ex) {
@@ -53,7 +53,7 @@ public class chat_thread extends Thread{
                 if(line.startsWith("USER"))
                 {
                     comboOnline.removeAllItems();
-                    for(int i=4;i<=line.length()-4;i+=8)
+                    for(int i=4;i<=line.length()-8;i+=8)
                     {
                         comboOnline.addItem(line.substring(i, i+8));
                     }
