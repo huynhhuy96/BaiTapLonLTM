@@ -63,7 +63,7 @@ public class chat_thread extends Thread{
 
                 } else if (line.startsWith("NAMEACCEPTED")) {
 
-                    out.println("notify" + " > "+nickname + " is online...");
+                    out.println("notify" + " <> "+nickname + " is online...");
                     
                     txt_msg.setEditable(true);
 

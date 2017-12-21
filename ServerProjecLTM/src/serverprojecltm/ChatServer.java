@@ -25,6 +25,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+
 public class ChatServer {
 
     private static final int PORT = 9001;
@@ -32,6 +33,8 @@ public class ChatServer {
     public static boolean calling = true;
     private static HashSet<String> names = new HashSet<String>();
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+    DataInputStream din;
+    DataOutputStream dout;
 
     //voice  
     public static AudioFormat getauAudioFormat() {
@@ -68,6 +71,12 @@ public class ChatServer {
         ///     
         //LOGIN
 
+        //FTP
+        
+        FTP_thread ftp = new FTP_thread();
+        ftp.start();
+        
+        
         //
         try {
             while (true) {
@@ -244,6 +253,18 @@ public class ChatServer {
 
                     }
                 }
+                //ftp
+                
+                if (check.startsWith("FTP")) {
+                   
+                }
+                
+                
+                
+                
+                //                
+                
+                
 
             } catch (IOException e) {
                 System.out.println(e);
