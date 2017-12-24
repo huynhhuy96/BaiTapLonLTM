@@ -34,8 +34,8 @@ public class chat_thread extends Thread{
     {
         try {
 
-           String serverAddress = "localhost";
-          //  String serverAddress = "172.16.0.91";
+           //String serverAddress = "localhost";
+            String serverAddress = "172.16.0.91";
            try {
                 socket = new Socket(serverAddress, 9001);
             } catch (IOException ex) {

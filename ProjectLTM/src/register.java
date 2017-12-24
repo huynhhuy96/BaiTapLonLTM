@@ -199,7 +199,8 @@ public class register extends javax.swing.JFrame {
 
     static BufferedReader in;
     static PrintWriter out;
-
+    String serverAddress = "172.16.0.91";
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         JOptionPane.showMessageDialog(this, "Hãy điền đầy đủ các mục và đảm bảo\r\nUser: bao gồm 8 ký tự gồm chữ và số.\r\nPassword: bao gồm 6 ký tự gồm chữ và số\r\nSau cùng hãy bấm `Register`", "Help for register", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -217,7 +218,7 @@ public class register extends javax.swing.JFrame {
        {
         if(jPasswordField1.getText().equals(pass.getText()))
         {
-            String serverAddress = "localhost";
+          //  String serverAddress = "localhost";
 //        String serverAddress = "172.16.0.91";
         Socket socketL = null;
         try {

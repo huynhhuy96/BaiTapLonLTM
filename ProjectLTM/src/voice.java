@@ -30,6 +30,7 @@ public class voice extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btn_pause.setText("Stop");
         btn_pause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

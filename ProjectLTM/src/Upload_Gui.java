@@ -77,6 +77,11 @@ public class Upload_Gui extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-help-20.png"))); // NOI18N
         jButton4.setText("Help");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,13 +90,12 @@ public class Upload_Gui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_path)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
-                        .addComponent(jButton3)
-                        .addGap(0, 131, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3))
+                    .addComponent(txt_path, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -103,16 +107,16 @@ public class Upload_Gui extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(33, 33, 33)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3, jButton4});
@@ -130,7 +134,8 @@ public class Upload_Gui extends javax.swing.JFrame {
 
     public static DataInputStream din;
     public static DataOutputStream dout;
-    boolean check = true;
+    String host = "172.16.0.91";
+    int port = 9002;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(txt_path.getText().equals(""))
         {
@@ -141,8 +146,8 @@ public class Upload_Gui extends javax.swing.JFrame {
              this.setVisible(false);
         try {
             try {
-                String host = "127.0.0.1";
-                int port = 9002;
+                
+                
                 Socket soc;
                 soc = new Socket(host, port);
                 din = new DataInputStream(soc.getInputStream());
@@ -155,11 +160,12 @@ public class Upload_Gui extends javax.swing.JFrame {
             filename = txt_path.getText();
             UUID uuid = UUID.randomUUID();
             String randomUUIDString = uuid.toString();
-            dout.writeUTF(randomUUIDString + filename.substring(filename.length() - 5, filename.length()));
-
+            //dout.writeUTF(randomUUIDString + filename.substring(filename.length() - 5, filename.length()));
+            File f = new File(filename);
+            dout.writeUTF("["+randomUUIDString+"]"+f.getName());
             System.out.println("Sending File ...");
             dout.writeUTF("SEND");
-            File f = new File(filename);
+            
             FileInputStream fin = new FileInputStream(f);
             int ch;
             do {
@@ -185,6 +191,10 @@ public class Upload_Gui extends javax.swing.JFrame {
     private void txt_pathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pathActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_pathActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Chọn file cần gửi thông qua click `Select File`\r\n Sau đó click vào `Upload`.");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
